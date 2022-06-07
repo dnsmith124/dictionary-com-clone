@@ -4,8 +4,10 @@ import { capitalizeFirstLetter } from "../Utilities/UtilityFunctions";
 
 const WordSearch = () => {
   const [wordToSearchFor, setWordToSearchFor] = useState('');
+  const [searchedWord, setSearchedWord] = useState('');
   const [isError, setIsError] = useState(false);
   const [results, setResults] = useState([]);
+  const [inputFocus, setInputFocus] = useState(false);
 
   const handleSearchInput = (e) => {
     console.log(e.target.value);
@@ -15,7 +17,8 @@ const WordSearch = () => {
     setWordToSearchFor(e.target.value);
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if(wordToSearchFor.length <= 0) {
       setIsError(true);
       return;
@@ -26,6 +29,7 @@ const WordSearch = () => {
     .then(
       (result) => {
         console.log(result)
+        setSearchedWord(wordToSearchFor);
         setResults(result);
       },
       (error) => {
@@ -36,24 +40,40 @@ const WordSearch = () => {
 
   return(
     <div className={styles.wordSearch}>
-      <div className="search-bar">
+      <div className={inputFocus ? styles.searchBarFocus : styles.searchBar}>
         {isError && 
         <h4>There is an error in your input</h4> }
-        <label htmlFor="word-search">Search for a word</label>
-        <input type="text" id="word-search" onChange={(e) => handleSearchInput(e) } />
-        <button onClick={handleSubmit}>
-          Test
-        </button>
+        <form onSubmit={(e) => handleSubmit(e)}>
+
+          <label htmlFor="word-search">Search for a word</label>
+          <input 
+            type="text" 
+            id="word-search" 
+            onChange={(e) => handleSearchInput(e) } 
+            onFocus={()=>{setInputFocus(true)}}
+            onBlur={()=>{setInputFocus(false)}}
+          />
+          <button  type="submit">
+            Test
+          </button>
+        </form>
       </div>
-      <div className="results">
+      <div className={styles.results}>
         {results.length > 1 && !isError && 
-          <div className="results-list">
-            <h3>{capitalizeFirstLetter(wordToSearchFor)}</h3>
+          <div className={styles.resultsList}>
+            <h2>{capitalizeFirstLetter(searchedWord)}</h2>
             {results.map((item, i) => {
               return(
-                <div key={i} className="result">
-                  {item.shortdef}
-                  {i}
+                <div key={i} className={styles.result}>
+                  <p className={styles.pos}>{item.fl}</p>
+                  <div className={styles.shortDefContainer}>
+                    <p className={styles.num}>{i + 1}</p>
+                    <div className={styles.shortDef}>
+                      {item.shortdef.map((def, i)=>{
+                        return <span key={i}>{def} </span>
+                      })}
+                    </div>
+                  </div>
 
                 </div>
               )
