@@ -11,7 +11,7 @@ const App = () => {
           <h2>Dictionary Clone</h2>
         </div>
       </header>
-      <div className={styles.container}>
+      <div className={styles.primaryContainer}>
         <WordSearch/>
       </div>
     </div>
