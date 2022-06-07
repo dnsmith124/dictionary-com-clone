@@ -1,17 +1,17 @@
-import './App.css';
-import React, {useState} from "react";
+import styles from './App.module.css';
+import React from "react";
 import WordSearch from './Components/WordSearch';
 
 const App = () => {
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <div className="header-container">
+    <div className={styles.app}>
+      <header className={styles.appHeader}>
+        <div className={styles.headerContainer}>
           <h2>Dictionary Clone</h2>
         </div>
       </header>
-      <div className="container">
+      <div className={styles.container}>
         <WordSearch/>
       </div>
     </div>

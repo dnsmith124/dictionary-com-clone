@@ -1,4 +1,4 @@
-.App-header {
+.appHeader {
   background-color: #282c34;
   display: flex;
   align-items: center;
@@ -7,12 +7,12 @@
   color: white;
 }
 
-.container, .header-container {
+.container, .headerContainer {
   max-width: 1300px;
   width: 100%;
   padding: 0 20px 20px;
   margin: 0 auto;
 }
-.header-container {
+.headerContainer {
   padding-bottom: 0;
 }
